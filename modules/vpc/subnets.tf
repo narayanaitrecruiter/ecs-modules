@@ -8,24 +8,44 @@ data "aws_availability_zones" "available" {}
 ## Public Subnets (one public subnet per AZ)
 ########################################################################################################################
 
-resource "aws_subnet" "public" {
-  count                   = var.az_count
-  cidr_block              = cidrsubnet(var.vpc_cidr_block, 8, var.az_count + count.index)
-  availability_zone       = data.aws_availability_zones.available.names[count.index]
-  vpc_id                  = aws_vpc.default.id
-  map_public_ip_on_launch = true
 
+resource "aws_subnet" "PublicSubnet1" {
+  vpc_id            = aws_vpc.non_prod_vpc.id
+  cidr_block        = var.public_subnet_cidrs[0]
+  availability_zone = var.availability_zones[0]
   tags = {
-    name = var.environment
+    Name    = "publicsubnet1"
+    Project = "QA-subnets"
   }
 }
+resource "aws_subnet" "PublicSubnet2" {
+  vpc_id            = aws_vpc.non_prod_vpc.id
+  cidr_block        = var.public_subnet_cidrs[1]
+  availability_zone = var.availability_zones[1]
+  tags = {
+    Name    = "publicsubnet2"
+    Project = "qa-subnets"
+  }
+}
+
+resource "aws_subnet" "PublicSubnet3" {
+  vpc_id            = aws_vpc.non_prod_vpc.id
+  cidr_block        = var.public_subnet_cidrs[2]
+  availability_zone = var.availability_zones[2]
+  tags = {
+    Name    = "publicsubnet3"
+    Project = "qa-subnets"
+  }
+}
+
+
 
 ########################################################################################################################
 ## Route Table with egress route to the internet
 ########################################################################################################################
 
 resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.default.id
+  vpc_id = aws_vpc.non_prod_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -52,7 +72,7 @@ resource "aws_route_table_association" "public" {
 ########################################################################################################################
 
 resource "aws_main_route_table_association" "public_main" {
-  vpc_id         = aws_vpc.default.id
+  vpc_id         = aws_vpc.non_prod_vpc.id
   route_table_id = aws_route_table.public.id
 }
 

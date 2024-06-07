@@ -81,7 +81,7 @@ resource "aws_alb_target_group" "service_target_group" {
   name                 = "${var.namespace}-TargetGroup"
   port                 = 80
   protocol             = "HTTP"
-  vpc_id               = aws_vpc.default.id
+  vpc_id               = aws_vpc.non_prod_vpc.id
   deregistration_delay = 5
 
   health_check {

@@ -1,25 +1,28 @@
+
+
 ########################################################################################################################
-## Create VPC with a CIDR block that has enough capacity for the amount of DNS names you need
+## EKS variables
 ########################################################################################################################
 
-resource "aws_vpc" "default" {
-  cidr_block           = var.vpc_cidr_block
-  enable_dns_support   = true
-  enable_dns_hostnames = true
-
-  tags = {
-    name = var.environment
-  }
+variable "eks_cluster_name" {
+  description = "name of the EKS cluster name"
+  type = string
+  default = "qa-eks"
 }
 
 ########################################################################################################################
-## Create Internet Gateway for egress/ingress connections to resources in the public subnets
+## Service variables
 ########################################################################################################################
 
-resource "aws_internet_gateway" "default" {
-  vpc_id = aws_vpc.default.id
+variable "namespace" {
+  description = "Namespace for the resources"
+  default     = "QA-cluster"
+  type        = string
+  
+}
 
-  tags = {
-    name = var.environment
-  }
+variable "environment" {
+  description = "Environment for deployment (like dev or staging)"
+  default     = "QA-cluster"
+  type        = string
 }

@@ -5,7 +5,7 @@
 resource "aws_security_group" "bastion_host" {
   name        = "${var.namespace}_SecurityGroup_BastionHost"
   description = "Bastion host Security Group"
-  vpc_id      = aws_vpc.default.id
+  vpc_id      = aws_vpc.non_prod_vpc.id
 
   ingress {
     description = "Allow SSH"

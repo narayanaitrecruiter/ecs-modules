@@ -1,57 +1,4 @@
-########################################################################################################################
-## Service variables
-########################################################################################################################
 
-variable "namespace" {
-  description = "Namespace for the resources"
-  default     = "QA-cluster"
-  type        = string
-  
-}
-
-
-
-variable "environment" {
-  description = "Environment for deployment (like dev or staging)"
-  default     = "QA-cluster"
-  type        = string
-}
-
-########################################################################################################################
-## AWS credentials
-########################################################################################################################
-
-
-
-variable "region" {
-  description = "AWS region"
-  default     = "eu-central-1"
-  type        = string
-}
-
-########################################################################################################################
-## Network variables
-########################################################################################################################
-
-
-
-variable "vpc_cidr_block" {
-  description = "CIDR block for the VPC network"
-  default     = "10.0.0.0/16"
-  type        = string
-}
-
-variable "public_subnet_cidrs" {
-  description = "CIDR blocks for public subnets"
-  type        = list(string)
-  default     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-}
-
-variable "az_count" {
-  description = "Describes how many availability zones are used"
-  default     = 3
-  type        = number
-}
 
 ########################################################################################################################
 ## EC2 Computing variables
@@ -170,22 +117,6 @@ variable "retention_in_days" {
 }
 
 ########################################################################################################################
-## ECR
-########################################################################################################################
-
-variable "ecr_force_delete" {
-  description = "Forces deletion of Docker images before resource is destroyed"
-  default     = true
-  type        = bool
-}
-
-variable "hash" {
-  description = "Task hash that simulates a unique version for every new deployment of the ECS Task"
-  type        = string
-  default     = "1.0"
-}
-
-########################################################################################################################
 ## Autoscaling Group
 ########################################################################################################################
 
@@ -218,13 +149,33 @@ variable "healthcheck_matcher" {
   default     = "200"
 }
 
-
 ########################################################################################################################
-## EKS variables
+## Service variables
 ########################################################################################################################
 
-variable "eks_cluster_name" {
-  description = "name of the EKS cluster name"
-  type = string
-  default = "qa-eks"
+variable "namespace" {
+  description = "Namespace for the resources"
+  default     = "QA-cluster"
+  type        = string
+  
 }
+
+variable "environment" {
+  description = "Environment for deployment (like dev or staging)"
+  default     = "QA-cluster"
+  type        = string
+}
+
+variable "vpc_id" {
+  description = "default value for vpc"
+  default = "non-prod-vpc"
+  type = string
+  
+}
+
+variable "subnet_id" {
+  description = "default value for subnet"
+  default = "non-prod-subnet"
+  type = string
+}
+

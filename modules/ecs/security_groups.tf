@@ -43,7 +43,7 @@ resource "aws_security_group" "ec2" {
 resource "aws_security_group" "alb" {
   name        = "${var.namespace}_ALB_SecurityGroup"
   description = "Security group for ALB"
-  vpc_id      = aws_vpc.default.id
+  vpc_id      = non-prod-vpc
 
   egress {
     description = "Allow all egress traffic"
