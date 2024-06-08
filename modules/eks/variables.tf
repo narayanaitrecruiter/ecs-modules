@@ -26,3 +26,17 @@ variable "environment" {
   default     = "QA-cluster"
   type        = string
 }
+
+variable "vpc_id" {
+  description = "default value for vpc"
+  default = "non-prod-vpc"
+  type = string
+  
+}
+
+variable "subnet_id" {
+  description = "default value for subnet"
+  default = "non-prod-subnet"
+  type = string
+  
+}

@@ -1,7 +1,7 @@
 # RDS Security Group
 resource "aws_security_group" "rds_security_group_mysql" {
   name   = "RDS Security Group for mysql"
-  vpc_id = aws_vpc.non_prod_vpc.id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 3306
@@ -29,7 +29,7 @@ resource "aws_db_instance" "qa_mysql" {
   db_name             = "qa_mysql"
   username            = "var.mysqlusername"
   password            = "var.mysqlpassword"
-  vpc_security_group_ids = [aws_security_group.rds_security_group_mysql.id]
+  vpc_security_group_ids = [var.subnet_id]
   db_subnet_group_name = aws_db_subnet_group.qa_mysql_subnet_group.name
   backup_retention_period = 1
   backup_window           = "00:00-01:00"
@@ -44,7 +44,7 @@ resource "aws_db_instance" "qa_mysql" {
 
 resource "aws_db_subnet_group" "qa_mysql_subnet_group" {
   name        = "qa-postgres-subnet-group"
-  subnet_ids  = [aws_subnet.public_subnets[0].id, aws_subnet.public_subnets[1].id]
+  subnet_ids  = [var.subnet_id]
   description = "Subnet group for QA Aurora Postgres"
 }
 

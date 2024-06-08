@@ -6,7 +6,7 @@
 # RDS Security Group
 resource "aws_security_group" "rds_security_group_postgres" {
   name   = "RDS Security Group for postgres"
-  vpc_id = aws_vpc.non_prod_vpc.id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 5432
@@ -34,7 +34,7 @@ resource "aws_db_instance" "qa_postgres_rds" {
   db_name             = "qa_postgres"
   username            = "var.postgresusername"
   password            = "var.postgrespassword"
-  vpc_security_group_ids = [aws_security_group.rds_security_group_postgres.id]
+  vpc_security_group_ids = [var.subnet_id]
   db_subnet_group_name = aws_db_subnet_group.qa_postgres_subnet_group.name
   backup_retention_period = 1
   backup_window           = "00:00-01:00"
@@ -49,7 +49,7 @@ resource "aws_db_instance" "qa_postgres_rds" {
 
 resource "aws_db_subnet_group" "qa_postgres_subnet_group" {
   name        = "qa-postgres-subnet-group"
-  subnet_ids  = [aws_subnet.public_subnets[0].id, aws_subnet.public_subnets[1].id]
+  subnet_ids  = [var.subnet_id]
   description = "Subnet group for QA Aurora Postgres"
 }
 # IAM Role (if needed)

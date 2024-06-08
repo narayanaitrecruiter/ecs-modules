@@ -5,7 +5,7 @@ resource "aws_eks_cluster" "qa_eks" {
   version  = "latest"
 
   vpc_config {
-    subnet_ids = [aws_subnet.public_subnets[0].id, aws_subnet.public_subnets[1].id]
+    subnet_ids = ["var.subnet_ids"]
   }
 
   depends_on = [

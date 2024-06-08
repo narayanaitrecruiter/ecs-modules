@@ -17,10 +17,11 @@ variable "public_subnet_cidrs" {
   default     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 }
 
-variable "az_count" {
-  description = "Describes how many availability zones are used"
-  default     = 3
-  type        = number
+variable "availability_zones" {
+  description = "Availability zones to use"
+  type        = list(string)
+  default     = ["us-west-2a", "us-west-2b", "us-west-2c"]  
+  
 }
 
 ########################################################################################################################
@@ -38,4 +39,9 @@ variable "environment" {
   description = "Environment for deployment (like dev or staging)"
   default     = "QA-cluster"
   type        = string
+}
+
+variable "subnet_ids" {
+  type = list(string)
+
 }

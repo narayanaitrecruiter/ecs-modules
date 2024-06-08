@@ -18,7 +18,7 @@ resource "aws_elasticache_cluster" "redis_server" {
 # Create the Redis Subnet Group
 resource "aws_elasticache_subnet_group" "redis_subnet_group" {
   name       = "redis-subnet-group"
-  subnet_ids = [aws_subnet.public_subnets[0].id, aws_subnet.public_subnets[1].id]
+  subnet_ids = [var.subnet_id]
 }
 # Create the CloudWatch Log Group
 resource "aws_cloudwatch_log_group" "redis_log_group" {

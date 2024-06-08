@@ -13,7 +13,7 @@ resource "aws_cloudwatch_log_group" "aurora_log_group" {
 # RDS Security Group
 resource "aws_security_group" "rds_security_group_aurora" {
   name   = "RDS Security Group for Aurora"
-  vpc_id = aws_vpc.non_prod_vpc.id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 5432
@@ -57,7 +57,7 @@ resource "aws_rds_cluster" "qa_postgres" {
 
 resource "aws_db_subnet_group" "qa_aurora_subnet_group" {
   name        = "qa-postgres-subnet-group"
-  subnet_ids  = [aws_subnet.public_subnets[0].id, aws_subnet.public_subnets[1].id]
+  subnet_ids  = [var.subnet_id]
   description = "Subnet group for QA Aurora Postgres"
 }
 

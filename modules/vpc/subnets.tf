@@ -2,14 +2,14 @@
 ## This resource returns a list of all AZ available in the region configured in the AWS credentials
 ########################################################################################################################
 
-data "aws_availability_zones" "available" {}
+#data "aws_availability_zones" "available" {}
 
 ########################################################################################################################
 ## Public Subnets (one public subnet per AZ)
 ########################################################################################################################
 
 
-resource "aws_subnet" "PublicSubnet1" {
+resource "aws_subnet" "PublicSubnet1"{
   vpc_id            = aws_vpc.non_prod_vpc.id
   cidr_block        = var.public_subnet_cidrs[0]
   availability_zone = var.availability_zones[0]
@@ -63,7 +63,7 @@ resource "aws_route_table" "public" {
 
 resource "aws_route_table_association" "public" {
   count          = var.az_count
-  subnet_id      = aws_subnet.public[count.index].id
+  subnet_id      = [var.subnet_ids]
   route_table_id = aws_route_table.public.id
 }
 
